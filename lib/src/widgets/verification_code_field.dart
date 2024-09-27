@@ -16,6 +16,7 @@ class VerificationCodeField extends HookWidget {
     this.size = const Size(40, 60),
     this.spaceBetween = 16,
     RegExp? matchingPattern,
+    this.keyboardType = TextInputType.number,
     super.key,
   })  : assert(length > 0, 'Length must be positive'),
         assert(size.height != double.infinity && size.width != double.infinity,
@@ -45,6 +46,11 @@ class VerificationCodeField extends HookWidget {
   ///
   /// default: RegExp(r'^\d+$') [RegExp].
   late final RegExp pattern;
+
+  /// The type of the keyboard to be shown when the field is focused
+  ///
+  /// default: number [TextInputType].
+  final TextInputType keyboardType;
 
   @override
   Widget build(BuildContext context) {
@@ -156,6 +162,7 @@ class VerificationCodeField extends HookWidget {
                           left: index == 0 ? 0 : spaceBetween,
                         ),
                         child: VerificationCodeCharacterFieldWidget(
+                          keyboardType: keyboardType,
                           pattern: pattern,
                           controller: textControllers[index],
                           focusNode: focusNodes[index],

@@ -13,6 +13,7 @@ class VerificationCodeCharacterFieldWidget extends StatelessWidget {
     required this.onPaste,
     required this.size,
     required this.pattern,
+    required this.keyboardType,
     super.key,
   });
 
@@ -35,6 +36,9 @@ class VerificationCodeCharacterFieldWidget extends StatelessWidget {
 
   /// Pattern for validation [RegExp].
   final RegExp pattern;
+
+  /// The type of the keyboard to be shown when the field is focused [TextInputType].
+  final TextInputType keyboardType;
 
   @override
   Widget build(BuildContext context) {
