@@ -24,6 +24,7 @@ class VerificationCodeField extends HookWidget {
     RegExp? matchingPattern,
     this.keyboardType = TextInputType.number,
     this.decoration = defaultDecoration,
+    this.style,
     super.key,
   })  : assert(length > 0, 'Length must be positive'),
         assert(size.height != double.infinity && size.width != double.infinity,
@@ -62,12 +63,14 @@ class VerificationCodeField extends HookWidget {
   /// The decoration of individual character fields [InputDecoration].
   final InputDecoration decoration;
 
+  /// The text style of individual character fields [TextStyle].
+  final TextStyle? style;
+
   @override
   Widget build(BuildContext context) {
     final code = useRef(List.filled(length, ''));
     final textControllers = useTextControllerList(length: length);
-    final focusNodes =
-        useFocusNodeList(length: length, debugLabel: 'codeInput');
+    final focusNodes = useFocusNodeList(length: length, debugLabel: 'codeInput');
     final focusScope = useFocusScopeNode();
     final currentIndex = useRef(0);
 
@@ -89,8 +92,7 @@ class VerificationCodeField extends HookWidget {
 
     /// Called when information is pasted into an input field
     final onPaste = useCallback(() async {
-      final latestClipboard =
-          (await Clipboard.getData(Clipboard.kTextPlain))?.text;
+      final latestClipboard = (await Clipboard.getData(Clipboard.kTextPlain))?.text;
       if (latestClipboard == null ||
           latestClipboard.length != length ||
           !pattern.hasMatch(latestClipboard)) {
@@ -113,8 +115,7 @@ class VerificationCodeField extends HookWidget {
             return KeyEventResult.handled;
           }
           final character = code.value[currentIndex.value];
-          if (event.logicalKey == LogicalKeyboardKey.backspace &&
-              character.isEmpty) {
+          if (event.logicalKey == LogicalKeyboardKey.backspace && character.isEmpty) {
             moveToPrevious();
             return KeyEventResult.handled;
           }
@@ -172,6 +173,7 @@ class VerificationCodeField extends HookWidget {
                           left: index == 0 ? 0 : spaceBetween,
                         ),
                         child: VerificationCodeCharacterFieldWidget(
+                          style: style,
                           decoration: decoration,
                           keyboardType: keyboardType,
                           pattern: pattern,
@@ -184,8 +186,7 @@ class VerificationCodeField extends HookWidget {
                             }
                             code.value[index] = value;
                             final codeString = code.value.join();
-                            if (onFilled != null &&
-                                codeString.length == length) {
+                            if (onFilled != null && codeString.length == length) {
                               onFilled?.call(codeString);
                             }
                           },

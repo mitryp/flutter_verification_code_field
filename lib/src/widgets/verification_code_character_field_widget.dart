@@ -15,6 +15,7 @@ class VerificationCodeCharacterFieldWidget extends StatelessWidget {
     required this.pattern,
     required this.keyboardType,
     required this.decoration,
+    required this.style,
     super.key,
   });
 
@@ -44,6 +45,9 @@ class VerificationCodeCharacterFieldWidget extends StatelessWidget {
   /// The decoration of this character field [InputDecoration].
   final InputDecoration decoration;
 
+  /// The text style of the character field [TextStyle].
+  final TextStyle? style;
+
   @override
   Widget build(BuildContext context) {
     return TextField(
@@ -52,7 +56,7 @@ class VerificationCodeCharacterFieldWidget extends StatelessWidget {
       inputFormatters: [FilteringTextInputFormatter.allow(pattern)],
       maxLength: 1,
       focusNode: focusNode,
-      style: TextStyle(fontSize: size.height / 2),
+      style: TextStyle(fontSize: size.height / 2).merge(style),
       contextMenuBuilder: (context, editableTextState) {
         return AdaptiveTextSelectionToolbar.editable(
           onShare: null,
