@@ -14,6 +14,7 @@ class VerificationCodeCharacterFieldWidget extends StatelessWidget {
     required this.size,
     required this.pattern,
     required this.keyboardType,
+    required this.decoration,
     super.key,
   });
 
@@ -40,13 +41,11 @@ class VerificationCodeCharacterFieldWidget extends StatelessWidget {
   /// The type of the keyboard to be shown when the field is focused [TextInputType].
   final TextInputType keyboardType;
 
+  /// The decoration of this character field [InputDecoration].
+  final InputDecoration decoration;
+
   @override
   Widget build(BuildContext context) {
-    const decoration = InputDecoration(
-      counterText: '',
-      errorMaxLines: 1,
-    );
-
     return TextField(
       controller: controller,
       keyboardType: TextInputType.number,

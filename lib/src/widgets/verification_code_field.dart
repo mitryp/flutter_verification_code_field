@@ -9,6 +9,12 @@ import 'package:flutter_verification_code_field/src/widgets/verification_code_ch
 ///
 /// To use the VerificationCodeField class, call VerificationCodeField(length: $length)
 class VerificationCodeField extends HookWidget {
+  /// The default decoration for the individual character fields.
+  static const defaultDecoration = InputDecoration(
+    counterText: '',
+    errorMaxLines: 1,
+  );
+
   /// Default constructor for [VerificationCodeField]
   VerificationCodeField({
     required this.length,
@@ -17,6 +23,7 @@ class VerificationCodeField extends HookWidget {
     this.spaceBetween = 16,
     RegExp? matchingPattern,
     this.keyboardType = TextInputType.number,
+    this.decoration = defaultDecoration,
     super.key,
   })  : assert(length > 0, 'Length must be positive'),
         assert(size.height != double.infinity && size.width != double.infinity,
@@ -51,6 +58,9 @@ class VerificationCodeField extends HookWidget {
   ///
   /// default: number [TextInputType].
   final TextInputType keyboardType;
+
+  /// The decoration of individual character fields [InputDecoration].
+  final InputDecoration decoration;
 
   @override
   Widget build(BuildContext context) {
@@ -162,6 +172,7 @@ class VerificationCodeField extends HookWidget {
                           left: index == 0 ? 0 : spaceBetween,
                         ),
                         child: VerificationCodeCharacterFieldWidget(
+                          decoration: decoration,
                           keyboardType: keyboardType,
                           pattern: pattern,
                           controller: textControllers[index],
